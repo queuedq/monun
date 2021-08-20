@@ -21,4 +21,18 @@ export default class Camera {
     this.scene.translation.x -= (at.x - translation.x) * ds;
     this.scene.translation.y -= (at.y - translation.y) * ds;
   }
+
+  toOuterCoordinate(pos) {
+    return {
+      x: pos.x * this.scene.scale + this.scene.translation.x,
+      y: pos.y * this.scene.scale + this.scene.translation.y,
+    };
+  }
+
+  toInnerCoordinate(pos) {
+    return {
+      x: (pos.x - this.scene.translation.x) / this.scene.scale,
+      y: (pos.y - this.scene.translation.y) / this.scene.scale,
+    };
+  }
 }

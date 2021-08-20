@@ -16,9 +16,6 @@ function init() {
 	objects.camera = new Camera(objects.scene);
 
 	objects.tileMap = new TileMap(objects.scene, 50);
-	objects.tileMap.draw({x:0, y:0});
-	objects.tileMap.draw({x:0, y:1});
-	objects.tileMap.draw({x:1, y:1});
 }
 
 function update() {
@@ -43,13 +40,43 @@ rootElement.addEventListener('wheel', event => {
 rootElement.addEventListener('mousedown', event => {
 	event.preventDefault();
 	let prevCursor = getCursorPosition(event);
+	update(event);
 
-	function update(event) {
-		const cursor = getCursorPosition(event);
+	function pan(cursor) {
 		objects.camera.pan({
 			x: cursor.x - prevCursor.x,
 			y: cursor.y - prevCursor.y,
 		});
+	}
+
+	function getInnerCoordinate(cursor) {
+		const pos = objects.camera.toInnerCoordinate(cursor);
+		return {
+			x: Math.round(pos.x / objects.tileMap.size),
+			y: Math.round(pos.y / objects.tileMap.size),
+		};
+	}
+
+	function draw(cursor) {
+		objects.tileMap.draw(getInnerCoordinate(cursor));
+	}
+	
+	function erase(cursor) {
+		objects.tileMap.erase(getInnerCoordinate(cursor));
+	}
+
+	function update(event) {
+		const cursor = getCursorPosition(event);
+		
+		if (event.metaKey) {
+			pan(cursor);
+		} else if (event.buttons == 1) {
+			draw(cursor);
+		} else if (event.buttons == 2) {
+			erase(cursor);
+		}
+
+		console.log(event.buttons);
 		prevCursor = cursor;
 	}
 
@@ -60,3 +87,4 @@ rootElement.addEventListener('mousedown', event => {
 	}, { once: true });
 });
 
+rootElement.addEventListener('contextmenu', event => event.preventDefault());
