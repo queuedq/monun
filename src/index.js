@@ -13,6 +13,8 @@ function init() {
 
 	objects.scene = two.makeGroup();
 	objects.rect = two.makeRectangle(0, 0, 50, 50).addTo(objects.scene);
+
+	two.bind('resize', () => two.scene.translation.set(two.width / 2, two.height / 2));
 }
 
 function update() {
