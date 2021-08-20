@@ -1,4 +1,5 @@
 import Two from 'two.js';
+import TileMap from './TileMap';
 
 const rootElement = document.getElementById('root');
 const two = new Two({ autostart: true, fullscreen: true }).appendTo(rootElement);
@@ -11,11 +12,14 @@ two.bind("update", update);
 function init() {
 	objects.scene = two.makeGroup();
 	objects.scene.translation.set(two.width / 2, two.height / 2);
-	objects.rect = two.makeRectangle(0, 0, 50, 50).addTo(objects.scene);
+	objects.tileMap = new TileMap(objects.scene, 50);
+	objects.tileMap.draw({x:0, y:0});
+	objects.tileMap.draw({x:0, y:1});
+	objects.tileMap.draw({x:1, y:1});
 }
 
 function update() {
-	objects.rect.rotation += 0.01;
+
 }
 
 function getCursorPosition(event) {
