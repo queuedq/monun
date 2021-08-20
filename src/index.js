@@ -1,4 +1,4 @@
-import Two from 'two.js'
+import Two from 'two.js';
 
 const rootElement = document.getElementById('root');
 const two = new Two({ autostart: true, fullscreen: true }).appendTo(rootElement);
@@ -9,12 +9,9 @@ two.bind("update", update);
 
 
 function init() {
-	two.scene.translation.set(two.width / 2, two.height / 2);
-
 	objects.scene = two.makeGroup();
+	objects.scene.translation.set(two.width / 2, two.height / 2);
 	objects.rect = two.makeRectangle(0, 0, 50, 50).addTo(objects.scene);
-
-	two.bind('resize', () => two.scene.translation.set(two.width / 2, two.height / 2));
 }
 
 function update() {
@@ -23,8 +20,8 @@ function update() {
 
 function getCursorPosition(event) {
 	const rect = rootElement.getBoundingClientRect(); 
-	const x = event.clientX - (rect.left + two.width / 2);
-	const y = event.clientY - (rect.top + two.height / 2);
+	const x = event.clientX - (rect.left);
+	const y = event.clientY - (rect.top);
 	return {x, y};
 }
 
