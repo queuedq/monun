@@ -1,5 +1,6 @@
 import Two from 'two.js';
 import TileMap from './TileMap';
+import Camera from './Camera';
 
 const rootElement = document.getElementById('root');
 const two = new Two({ autostart: true, fullscreen: true }).appendTo(rootElement);
@@ -12,6 +13,8 @@ two.bind("update", update);
 function init() {
 	objects.scene = two.makeGroup();
 	objects.scene.translation.set(two.width / 2, two.height / 2);
+	objects.camera = new Camera(objects.scene);
+
 	objects.tileMap = new TileMap(objects.scene, 50);
 	objects.tileMap.draw({x:0, y:0});
 	objects.tileMap.draw({x:0, y:1});
@@ -31,29 +34,23 @@ function getCursorPosition(event) {
 
 rootElement.addEventListener('wheel', event => {
 	event.preventDefault();
-
-	const scale = objects.scene.scale;
-	let newScale = scale + event.deltaY * -0.01;
-	newScale = Math.min(newScale, 10);
-	newScale = Math.max(newScale, 0.25);
-	
-	const ds = (newScale - scale) / scale;
-	const cursor = getCursorPosition(event);
-	
-	objects.scene.scale = newScale;
-	objects.scene.translation.x -= (cursor.x - objects.scene.translation.x) * ds;
-	objects.scene.translation.y -= (cursor.y - objects.scene.translation.y) * ds;
+	objects.camera.zoom(
+		event.deltaY * -0.01,
+		getCursorPosition(event)
+	);
 }, { passive: false });
 
 rootElement.addEventListener('mousedown', event => {
 	event.preventDefault();
-	const startCursor = getCursorPosition(event);
-	const startTranslation = objects.scene.translation.clone();
+	let prevCursor = getCursorPosition(event);
 
 	function update(event) {
 		const cursor = getCursorPosition(event);
-		objects.scene.translation.x = startTranslation.x + cursor.x - startCursor.x;
-		objects.scene.translation.y = startTranslation.y + cursor.y - startCursor.y;
+		objects.camera.pan({
+			x: cursor.x - prevCursor.x,
+			y: cursor.y - prevCursor.y,
+		});
+		prevCursor = cursor;
 	}
 
 	rootElement.addEventListener('mousemove', update);
