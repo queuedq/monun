@@ -4,7 +4,7 @@ export default class TileMap {
   constructor(group, size) {
     this.group = group;
     this.size = size;
-    this.tiles = {};
+    this.tiles = new Map();
   }
 
   getHash(pos) {
@@ -13,22 +13,23 @@ export default class TileMap {
 
   draw(pos) {
     const hash = this.getHash(pos);
-    if (this.tiles[hash] === undefined) {
-      this.tiles[hash] = new Two.Rectangle(
+    if (!this.tiles.has(hash)) {
+      const rect = new Two.Rectangle(
         pos.x * this.size,
         pos.y * this.size,
         this.size,
         this.size,
       );
-      this.tiles[hash].addTo(this.group);
+      this.tiles.set(hash, rect);
+      rect.addTo(this.group);
     }
   }
 
   erase(pos) {
     const hash = this.getHash(pos);
-    if (this.tiles[hash] !== undefined) {
-      this.tiles[hash].remove();
-      this.tiles[hash] = undefined;
+    if (this.tiles.has(hash)) {
+      this.tiles.get(hash).remove();
+      this.tiles.delete(hash);
     }
   }
 }
