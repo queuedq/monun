@@ -48,8 +48,8 @@ export const addMouseEvents = ({ element, scene, tools }) => {
   }
 
   element.addEventListener('mousedown', onMouseDown);
-  element.addEventListener('mousemove', onMouseMove);
-  element.addEventListener('mouseup', () => { dragging = false; });
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mouseup', () => { dragging = false; });
 	element.addEventListener('wheel', onWheel, { passive: false });
   element.addEventListener('contextmenu', event => event.preventDefault());
 }
