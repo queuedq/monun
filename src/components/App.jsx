@@ -8,7 +8,7 @@ const tools = new ToolStore();
 const App = () => {
   return (
     <div>
-      <Canvas />
+      <Canvas tools={tools} />
       <div style={{position: 'absolute'}}>
         <Toolbox tools={tools} />
       </div>

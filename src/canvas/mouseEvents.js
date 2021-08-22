@@ -1,7 +1,7 @@
-import { pan, zoom } from "./tools/move";
-import { draw, erase } from "./tools/tile";
+import { pan, zoom } from './tools/move';
+import { draw, erase } from './tools/tile';
 
-export const addMouseEvents = ({ element, scene }) => {
+export const addMouseEvents = ({ element, scene, tools }) => {
   let dragging = false; // TODO: proper dragging state handling
   let prevCursor = undefined;
 
@@ -12,12 +12,13 @@ export const addMouseEvents = ({ element, scene }) => {
     return {x, y};
   }
 
-  function dragTools({ event, cursor }) {
-    if (event.metaKey) {
+  function dragTools({ cursor }) {
+    const tool = tools.selectedTool;
+    if (tool == 'MOVE') {
       pan({ scene, cursor, prevCursor });
-    } else if (event.buttons == 1) {
+    } else if (tool == 'TILE_DRAW') {
       draw({ scene, cursor });
-    } else if (event.buttons == 2) {
+    } else if (tool == 'TILE_ERASE') {
       erase({ scene, cursor });
     }
   }
