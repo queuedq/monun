@@ -20,6 +20,8 @@ export default class TileMap {
         this.size,
         this.size,
       );
+      rect.fill = 'rgba(0, 0, 255, 0.3)';
+      rect.stroke = 'rgba(0, 0, 255, 0.8)';
       this.tiles.set(hash, rect);
       rect.addTo(this.group);
     }
