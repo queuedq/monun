@@ -17,7 +17,7 @@ export const addMouseEvents = ({ element, scene, tools }) => {
     if (tool == 'MOVE') {
       pan({ scene, cursor, prevCursor });
     } else if (tool == 'TILE_DRAW') {
-      draw({ scene, cursor });
+      draw({ scene, cursor, tile: tools.selectedTile });
     } else if (tool == 'TILE_ERASE') {
       erase({ scene, cursor });
     }

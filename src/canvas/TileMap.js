@@ -11,20 +11,28 @@ export default class TileMap {
     return pos.x + ':' + pos.y;
   }
 
-  draw(pos) {
+  draw(pos, tile) {
     const hash = this.getHash(pos);
-    if (!this.tiles.has(hash)) {
-      const rect = new Two.Rectangle(
-        pos.x * this.size,
-        pos.y * this.size,
-        this.size,
-        this.size,
-      );
+    if (this.tiles.has(hash)) { this.erase(pos); }
+
+    // TODO: extract tile object creation logic
+    const rect = new Two.Rectangle(
+      pos.x * this.size,
+      pos.y * this.size,
+      this.size,
+      this.size,
+    );
+
+    if (tile == 'BLUE') {
       rect.fill = 'rgba(0, 0, 255, 0.3)';
       rect.stroke = 'rgba(0, 0, 255, 0.8)';
-      this.tiles.set(hash, rect);
-      rect.addTo(this.group);
+    } else if (tile == 'RED') {
+      rect.fill = 'rgba(255, 0, 0, 0.3)';
+      rect.stroke = 'rgba(255, 0, 0, 0.8)';
     }
+
+    this.tiles.set(hash, rect);
+    rect.addTo(this.group);
   }
 
   erase(pos) {

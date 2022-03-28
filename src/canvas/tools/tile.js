@@ -6,8 +6,8 @@ export function getTilePos({ scene, cursor }) {
   };
 }
 
-export function draw({ scene, cursor }) {
-  scene.tileMap.draw(getTilePos({ scene, cursor }));
+export function draw({ scene, cursor, tile }) {
+  scene.tileMap.draw(getTilePos({ scene, cursor }), tile);
 }
 
 export function erase({ scene, cursor }) {

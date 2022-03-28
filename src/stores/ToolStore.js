@@ -1,7 +1,8 @@
 import { makeAutoObservable } from "mobx"
 
 export default class ToolStore {
-  selectedTool = 'MOVE'; // MOVE, TILE_DRAW, TILE_ERASE
+  selectedTool = 'TILE_DRAW'; // MOVE, TILE_DRAW, TILE_ERASE
+  selectedTile = 'BLUE';
 
   constructor() {
     makeAutoObservable(this);
@@ -9,5 +10,9 @@ export default class ToolStore {
 
   select(tool) {
     this.selectedTool = tool;
+  }
+
+  selectTile(tile) {
+    this.selectedTile = tile;
   }
 }
