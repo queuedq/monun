@@ -12,7 +12,7 @@ export const addMouseEvents = ({ element, scene, tools }) => {
     return {x, y};
   }
 
-  function dragTools({ cursor }) {
+  function dragTools({ scene, event, cursor }) {
     const tool = tools.selectedTool;
     if (tool == 'MOVE') {
       pan({ scene, cursor, prevCursor });

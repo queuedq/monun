@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import * as style from './Toolbox.module.css';
+import styles from './Toolbox.module.css';
 
 const buttons = [
   {
@@ -24,7 +24,7 @@ const Toolbox = ({ tools }) => {
         <button
           key={type}
           onClick={() => tools.select(type)}
-          className={tools.selectedTool == type ? style.selected : ''}
+          className={tools.selectedTool == type ? styles.selected : ''}
         >
           {text}
         </button>

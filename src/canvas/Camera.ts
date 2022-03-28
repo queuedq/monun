@@ -1,4 +1,10 @@
+import { Group } from "two.js/src/group";
+
 export default class Camera {
+  scene: Group;
+  minZoom: number;
+  maxZoom: number;
+
   constructor(scene) {
     this.scene = scene;
     this.minZoom = 0.25;

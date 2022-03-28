@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import * as style from './TileSelect.module.css';
+import styles from './TileSelect.module.css';
 
 const tiles = [
   {
@@ -22,7 +22,7 @@ const TileSelect = ({ tools }) => {
         <button
           key={id}
           onClick={() => tools.selectTile(id)}
-          className={tools.selectedTile == id ? style.selected : ''}
+          className={tools.selectedTile == id ? styles.selected : ''}
         >
           {text}
         </button>

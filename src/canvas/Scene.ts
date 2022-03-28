@@ -1,10 +1,11 @@
+import { Group } from "two.js/src/group";
 import Camera from "./Camera";
 import TileMap from "./TileMap";
 
 export default class Scene {
-  target // Target group to draw inside
-  camera
-  tileMap
+  target: Group;
+  camera: Camera;
+  tileMap: TileMap;
 
   constructor(target) {
     this.target = target;
