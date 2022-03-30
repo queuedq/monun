@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Canvas from './Canvas';
 import Toolbox from './Toolbox';
 import TileSelect from './TileSelect';

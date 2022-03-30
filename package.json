@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/react": "^17.0.43",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
     "parcel": "^2.4.0",
