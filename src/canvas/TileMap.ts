@@ -1,6 +1,12 @@
 import Two from 'two.js';
+import { Group } from 'two.js/src/group';
+import { Path } from 'two.js/src/path';
 
 export default class TileMap {
+  group: Group;
+  size: number;
+  tiles: Map<string, Path>;
+
   constructor(group, size) {
     this.group = group;
     this.size = size;
@@ -16,7 +22,6 @@ export default class TileMap {
     if (this.tiles.has(hash)) { this.erase(pos); }
 
     // TODO: extract tile object creation logic
-    // TODO: change this file into .ts (currently there's a bug: two.js#620)
     const rect = new Two.Rectangle(
       pos.x * this.size,
       pos.y * this.size,
