@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import styles from './TileSelect.module.css';
+import ToolStore from '../stores/ToolStore';
 
 const tiles = [
   {
@@ -11,11 +12,13 @@ const tiles = [
     id: 'RED',
     text: 'Red',
   },
-]
+];
 
-const TileSelect = ({ tools }) => {
-  if (tools.selectedTool != 'TILE_DRAW') { return null; }
+interface TileSelectProps {
+  tools: ToolStore;
+}
 
+const TileSelect = ({ tools }: TileSelectProps) => {
   return (
     <div>
       {tiles.map(({ id, text }) => 

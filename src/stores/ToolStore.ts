@@ -13,6 +13,7 @@ export default class ToolStore {
   }
 
   selectTile(tile) {
+    this.selectedTool = 'TILE_DRAW';
     this.selectedTile = tile;
   }
 }

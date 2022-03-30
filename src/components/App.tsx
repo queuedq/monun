@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Canvas from './Canvas';
-import Toolbox from './Toolbox';
-import TileSelect from './TileSelect';
+import Toolbar from './toolbar/Toolbar';
+import Toolbox from './toolbar/Toolbox';
+import Sidebar from './sidebar/Sidebar';
+import TileSelect from './sidebar/TileSelect';
 import ToolStore from '../stores/ToolStore';
 
 const tools = new ToolStore();
@@ -10,10 +12,12 @@ const App = () => {
   return (
     <div>
       <Canvas tools={tools} />
-      <div style={{position: 'absolute'}}>
+      <Toolbar>
         <Toolbox tools={tools} />
+      </Toolbar>
+      <Sidebar>
         <TileSelect tools={tools} />
-      </div>
+      </Sidebar>
     </div>
   );
 }
