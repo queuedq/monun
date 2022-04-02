@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import styles from './TileSelect.module.css';
-import ToolStore from '../stores/ToolStore';
+import ToolStore from '../../stores/ToolStore';
 
 const tiles = [
   {
