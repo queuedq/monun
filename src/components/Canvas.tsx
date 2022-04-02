@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
+import ToolStore from '../stores/ToolStore';
 import { init } from '../canvas';
 
-const styleCursor = tools => {
+const styleCursor = (tools: ToolStore) => {
   return {
-    cursor: tools.selectedTool == 'MOVE' ? 'move' : 'auto',
+    cursor: tools.currentTool == 'MOVE' ? 'move' : 'auto',
   }
 }
 

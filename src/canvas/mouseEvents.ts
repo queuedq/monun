@@ -13,11 +13,16 @@ export const addMouseEvents = ({ element, scene, tools }) => {
   }
 
   function dragTools({ scene, event, cursor }) {
-    const tool = tools.selectedTool;
+    console.log(event.buttons);
+    const tool = tools.currentTool;
     if (tool == 'MOVE') {
       pan({ scene, cursor, prevCursor });
     } else if (tool == 'TILE_DRAW') {
-      draw({ scene, cursor, tile: tools.selectedTile });
+      if (event.buttons === 1) {
+        draw({ scene, cursor, tile: tools.selectedTile });
+      } else if (event.buttons === 2) {
+        erase({ scene, cursor });
+      }
     } else if (tool == 'TILE_ERASE') {
       erase({ scene, cursor });
     }
