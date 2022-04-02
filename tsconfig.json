@@ -1,9 +1,10 @@
 {
-  "target": "es6",
-  "module": "es2020",
   "compilerOptions": {
+    "target": "es6",
+    "module": "es2020",
+    "moduleResolution": "node",
     "jsx": "react",
-    "lib": ["dom", "es6"],
+    "lib": ["dom", "es2017"],
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   }
 }
