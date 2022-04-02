@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Canvas from './Canvas';
+import Sidebar from './Sidebar';
 import Toolbox from '../features/toolbox/Toolbox';
-import Sidebar from './sidebar/Sidebar';
-import TileSelect from './sidebar/TileSelect';
+import TileSelect from '../features/tileSelect/TileSelect';
 import ToolStore from '../stores/ToolStore';
 import { registerShortcuts } from '../features/shortcuts';
 
