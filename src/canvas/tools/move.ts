@@ -1,10 +1,10 @@
-export function pan({ scene, cursor, prevCursor }) {
-  scene.camera.pan({
-    x: cursor.x - prevCursor.x,
-    y: cursor.y - prevCursor.y,
-  });
+import Scene from "../Scene";
+import { Vec2 } from "../types";
+
+export function pan(scene: Scene, cursor: Vec2, prevCursor: Vec2) {
+  scene.camera.pan(cursor.sub(prevCursor));
 }
 
-export function zoom({ scene, delta, cursor }) {
+export function zoom(scene: Scene, delta: number, cursor: Vec2) {
   scene.camera.zoom(delta, cursor);
 }

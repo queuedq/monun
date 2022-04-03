@@ -1,22 +1,28 @@
+import ToolStore from '../stores/ToolStore';
+import Scene from './Scene';
 import { pan, zoom } from './tools/move';
 import { draw, erase } from './tools/tile';
+import { Vec2 } from './types';
 
-export const addMouseEvents = ({ element, scene, tools }) => {
+export const addMouseEvents = ({ element, scene, tools }: {
+  element: Element,
+  scene: Scene,
+  tools: ToolStore,
+}) => {
   let dragging = false; // TODO: proper dragging state handling
   let prevCursor = undefined;
 
-  function getCursorPos(event) {
+  function getCursorPos(event): Vec2 {
     const rect = element.getBoundingClientRect(); 
     const x = event.clientX - (rect.left);
     const y = event.clientY - (rect.top);
-    return {x, y};
+    return new Vec2(x, y);
   }
 
   function dragTools({ scene, event, cursor }) {
-    console.log(event.buttons);
     const tool = tools.currentTool;
     if (tool == 'MOVE') {
-      pan({ scene, cursor, prevCursor });
+      pan(scene, cursor, prevCursor);
     } else if (tool == 'TILE_DRAW') {
       if (event.buttons === 1) {
         draw({ scene, cursor, tile: tools.selectedTile });
@@ -45,11 +51,7 @@ export const addMouseEvents = ({ element, scene, tools }) => {
 
   function onWheel(event) {
     event.preventDefault();
-    zoom({
-      scene,
-      delta: event.deltaY * -0.003,
-      cursor: getCursorPos(event),
-    });
+    zoom(scene, event.deltaY * -0.003, getCursorPos(event));
   }
 
   element.addEventListener('mousedown', onMouseDown);
