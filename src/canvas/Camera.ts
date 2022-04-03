@@ -18,7 +18,7 @@ export default class Camera {
 
   zoom(delta, at) {
     const { scale, translation } = this.scene;
-    let newScale = scale + delta;
+    let newScale = scale * Math.exp(delta);
     newScale = Math.max(newScale, this.minZoom);
     newScale = Math.min(newScale, this.maxZoom);
     const ds = (newScale - scale) / scale;

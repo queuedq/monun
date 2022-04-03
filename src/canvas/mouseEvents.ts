@@ -47,7 +47,7 @@ export const addMouseEvents = ({ element, scene, tools }) => {
     event.preventDefault();
     zoom({
       scene,
-      delta: event.deltaY * -0.01,
+      delta: event.deltaY * -0.003,
       cursor: getCursorPos(event),
     });
   }
