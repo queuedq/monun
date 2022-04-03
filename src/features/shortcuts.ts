@@ -18,13 +18,13 @@ export const registerShortcuts = (tools: ToolStore) => {
       }
     })
     if (event.code === 'Space') {
-      tools.tempMove = true;
+      tools.setTempMove(true);
     }
   }, true);
   
   window.addEventListener('keyup', (event) => {
     if (event.code === 'Space') {
-      tools.tempMove = false;
+      tools.setTempMove(false);
     }
   }, true);  
 }

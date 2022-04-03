@@ -19,6 +19,10 @@ export default class ToolStore {
     this.selectedTile = tile;
   }
 
+  setTempMove(val) {
+    this.tempMove = val;
+  }
+
   /// Returns the currently selected tool,
   /// also considering whether the user temporarily switched to another tool.
   get currentTool(): Tool {
