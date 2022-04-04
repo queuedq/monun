@@ -23,8 +23,8 @@ export default class TileMap {
 
     // TODO: extract tile object creation logic
     const rect = new Two.Rectangle(
-      pos.x * this.size,
-      pos.y * this.size,
+      pos.x * this.size + this.size / 2,
+      pos.y * this.size + this.size / 2,
       this.size,
       this.size,
     );
