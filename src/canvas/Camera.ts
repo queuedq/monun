@@ -1,64 +1,80 @@
 import { createNanoEvents, Emitter } from "nanoevents";
 import { Vec2 } from "./types";
+import Viewport from "./Viewport";
 
-export interface CameraState {
-  translation: Vec2; // inner coordinates
-  scale: number;
+export interface VisibleRect {
+  pos: Vec2;
+  width: number;
+  height: number;
 }
 
 export interface CameraEvent {
-  update: (cam: CameraState) => void;
+  update: (cam: Camera) => void;
 }
 
 export default class Camera {
   minZoom: number;
   maxZoom: number;
   
-  cam: CameraState;
-  emitter: Emitter<CameraEvent>;
+  translation: Vec2;
+  scale: number;
 
-  constructor() {
+  viewport: Viewport;
+  events: Emitter<CameraEvent>;
+
+  constructor(viewport: Viewport) {
     this.minZoom = 0.25;
     this.maxZoom = 10;
-    this.cam = { translation: Vec2.zero(), scale: 1 };
-    this.emitter = createNanoEvents<CameraEvent>();
+    
+    this.translation = Vec2.zero();
+    this.scale = 1;
+
+    this.viewport = viewport;
+    this.events = createNanoEvents<CameraEvent>();
+    
+    this.viewport.events.on('resize', this.update);
   }
 
-  on<E extends keyof CameraEvent>(event: E, callback: CameraEvent[E]) {
-    return this.emitter.on(event, callback);
-  }
-
-  update() {
-    this.emitter.emit('update', this.cam);
+  update = () => {
+    this.events.emit('update', this);
   }
 
   pan(delta: Vec2) {
-    this.cam.translation = this.cam.translation.sub(delta.scale(1 / this.cam.scale));
+    this.translation = this.translation.sub(delta.scale(1 / this.scale));
 
     this.update();
   }
 
   zoom(delta: number, pivot: Vec2) {
-    const { translation, scale } = this.cam;
+    const { translation, scale } = this;
     const innerPivot = this.toInnerCoordinates(pivot);
     
     let newScale = scale * Math.exp(delta);
     newScale = Math.max(newScale, this.minZoom);
     newScale = Math.min(newScale, this.maxZoom);
     
-    this.cam.translation = innerPivot.add(
+    this.translation = innerPivot.add(
       translation.sub(innerPivot).scale(scale / newScale)
     );
-    this.cam.scale = newScale;
+    this.scale = newScale;
     
     this.update();
   }
 
   toOuterCoordinates(pos: Vec2) {
-    return pos.sub(this.cam.translation).scale(this.cam.scale);
+    return pos.sub(this.translation).scale(this.scale);
   }
 
   toInnerCoordinates(pos: Vec2) {
-    return this.cam.translation.add(pos.scale(1 / this.cam.scale));
+    return this.translation.add(pos.scale(1 / this.scale));
+  }
+
+  /// Returns the inner coordinates of the visible area.
+  get visibleRect(): VisibleRect {
+    return {
+      pos: this.translation,
+      width: this.viewport.width,
+      height: this.viewport.height
+    };
   }
 }

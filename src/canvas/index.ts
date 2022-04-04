@@ -7,7 +7,7 @@ export const init = ({ element, tools }) => {
 	
 	const target = two.makeGroup([]);
 	target.translation.set(two.width / 2, two.height / 2);
-	const scene = new Scene(target);
+	const scene = new Scene(element, target);
 	
 	addMouseEvents({ element, scene, tools });
 };
