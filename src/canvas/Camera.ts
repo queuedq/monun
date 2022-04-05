@@ -73,8 +73,8 @@ export default class Camera {
   get visibleRect(): VisibleRect {
     return {
       pos: this.translation,
-      width: this.viewport.width,
-      height: this.viewport.height
+      width: this.viewport.width / this.scale,
+      height: this.viewport.height / this.scale,
     };
   }
 }

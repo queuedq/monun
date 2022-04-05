@@ -3,12 +3,12 @@ import { Group } from 'two.js/src/group';
 import { Path } from 'two.js/src/path';
 
 export default class TileMap {
-  group: Group;
+  layer: Group;
   size: number;
   tiles: Map<string, Path>;
 
-  constructor(group, size) {
-    this.group = group;
+  constructor(size) {
+    this.layer = new Group();
     this.size = size;
     this.tiles = new Map();
   }
@@ -38,7 +38,7 @@ export default class TileMap {
     }
 
     this.tiles.set(hash, rect);
-    rect.addTo(this.group);
+    rect.addTo(this.layer);
   }
 
   erase(pos) {
