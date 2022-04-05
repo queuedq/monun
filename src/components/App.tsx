@@ -12,13 +12,13 @@ registerShortcuts(tools);
 
 const App = () => {
   return (
-    <div>
+    <>
       <Canvas tools={tools} />
       <Toolbox tools={tools} />
       <Sidebar>
         <TileSelect tools={tools} />
       </Sidebar>
-    </div>
+    </>
   );
 }
 

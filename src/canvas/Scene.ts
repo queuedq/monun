@@ -1,6 +1,6 @@
 import { Group } from "two.js/src/group";
 import Camera from "./Camera";
-import { Grid } from "./Grid";
+import Grid from "./Grid";
 import TileMap from "./TileMap";
 import Viewport from "./Viewport";
 

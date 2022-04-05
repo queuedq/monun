@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import ToolStore from '../stores/ToolStore';
 import { init } from '../canvas';
+import styles from './Canvas.module.css';
 
 const styleCursor = (tools: ToolStore) => {
   return {
@@ -22,7 +23,7 @@ const Canvas = ({ tools }) => {
     }
   }
 
-  return <div style={styleCursor(tools)} ref={ref}></div>;
+  return <div className={styles.canvas} style={styleCursor(tools)} ref={ref}></div>;
 }
 
 export default observer(Canvas);
