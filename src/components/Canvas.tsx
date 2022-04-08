@@ -23,7 +23,9 @@ const Canvas = ({ tools }) => {
     }
   }
 
-  return <div className={styles.canvas} style={styleCursor(tools)} ref={ref}></div>;
+  return (
+    <canvas className={styles.canvas} style={styleCursor(tools)} ref={ref} />
+  );
 }
 
 export default observer(Canvas);
