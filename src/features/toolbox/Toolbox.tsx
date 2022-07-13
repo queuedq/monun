@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ToolStore from '../../stores/ToolStore';
-import { toolDefinitions } from './tools';
+import { Tool, toolDefinitions } from './tools';
 import { getShortcut } from '../shortcuts';
 import styles from './Toolbox.module.scss';
 
@@ -12,7 +12,7 @@ interface ToolboxProps {
 }
 
 const Toolbox = ({ tools }: ToolboxProps) => {
-  const buttonStyle = (toolType) => classnames(
+  const buttonStyle = (toolType: Tool) => classnames(
     styles.button,
     toolType === tools.currentTool ? styles.selected : null
   );

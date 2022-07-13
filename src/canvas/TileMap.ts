@@ -6,25 +6,25 @@ import { Vec2 } from './types';
 
 export default class TileMap {
   layer: Group;
-  size: number;
+  tileSize: number;
   tiles: Map<string, Shape>;
 
-  constructor(size) {
+  constructor(tileSize: number) {
     this.layer = new Group();
-    this.size = size;
+    this.tileSize = tileSize;
     this.tiles = new Map();
   }
 
-  getHash(pos) {
+  getHash(pos: Vec2) {
     return pos.x + ':' + pos.y;
   }
 
   private createColorTile(pos: Vec2, tile: ColorTile): Shape {
     const rect = new Two.Rectangle(
-      pos.x * this.size + this.size / 2,
-      pos.y * this.size + this.size / 2,
-      this.size,
-      this.size,
+      pos.x * this.tileSize + this.tileSize / 2,
+      pos.y * this.tileSize + this.tileSize / 2,
+      this.tileSize,
+      this.tileSize,
     );
     rect.fill = tile.color;
     rect.stroke = 'transparent';
@@ -38,8 +38,8 @@ export default class TileMap {
     }
   }
 
-  draw(pos: Vec2, tile: Tile | null) {
-    if (tile === null) return;
+  draw(pos: Vec2, tile: Tile | undefined) {
+    if (tile === undefined) return;
 
     const hash = this.getHash(pos);
     if (this.tiles.has(hash)) { this.erase(pos); }
@@ -49,11 +49,9 @@ export default class TileMap {
     tileShape.addTo(this.layer);
   }
 
-  erase(pos) {
+  erase(pos: Vec2) {
     const hash = this.getHash(pos);
-    if (this.tiles.has(hash)) {
-      this.tiles.get(hash).remove();
-      this.tiles.delete(hash);
-    }
+    this.tiles.get(hash)?.remove();
+    this.tiles.delete(hash);
   }
 }

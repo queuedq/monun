@@ -6,22 +6,22 @@ import { draw, erase } from './tools/tile';
 import { Vec2 } from './types';
 
 export const addMouseEvents = ({ element, scene, tools, tiles }: {
-  element: Element,
+  element: HTMLElement,
   scene: Scene,
   tools: ToolStore,
   tiles: TileStore,
 }) => {
   let dragging = false; // TODO: proper dragging state handling
-  let prevCursor = undefined;
+  let prevCursor = new Vec2(0, 0);
 
-  function getCursorPos(event): Vec2 {
+  function getCursorPos(event: MouseEvent): Vec2 {
     const rect = element.getBoundingClientRect(); 
     const x = event.clientX - (rect.left);
     const y = event.clientY - (rect.top);
     return new Vec2(x, y);
   }
 
-  function dragTools({ scene, event, cursor }) {
+  function dragTools(scene: Scene, event: MouseEvent, cursor: Vec2) {
     const tool = tools.currentTool;
     if (tool == 'MOVE') {
       pan(scene, cursor, prevCursor);
@@ -29,29 +29,29 @@ export const addMouseEvents = ({ element, scene, tools, tiles }: {
       if (event.buttons === 1) {
         draw(scene, cursor, tiles.getTile(tools.selectedTile));
       } else if (event.buttons === 2) {
-        erase({ scene, cursor });
+        erase(scene, cursor);
       }
     } else if (tool == 'TILE_ERASE') {
-      erase({ scene, cursor });
+      erase(scene, cursor);
     }
   }
 
-  function onMouseDown(event) {
+  function onMouseDown(event: MouseEvent) {
     event.preventDefault();
     dragging = true;
     prevCursor = getCursorPos(event);
-    dragTools({ scene, event, cursor: prevCursor });
+    dragTools(scene, event, prevCursor);
   }
 
-  function onMouseMove(event) {
+  function onMouseMove(event: MouseEvent) {
     event.preventDefault();
     if (!dragging) return;
     const cursor = getCursorPos(event);
-    dragTools({ scene, event, cursor });
+    dragTools(scene, event, cursor);
     prevCursor = cursor;
   };
 
-  function onWheel(event) {
+  function onWheel(event: WheelEvent) {
     event.preventDefault();
     zoom(scene, event.deltaY * -0.003, getCursorPos(event));
   }

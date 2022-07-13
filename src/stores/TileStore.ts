@@ -22,8 +22,8 @@ export default class TileStore {
   }
 
   /// (computed with argument)
-  getTile(id: string): Tile | null {
+  getTile(id: string): Tile | undefined {
     if (this.tileList.has(id)) return this.tileList.get(id);
-    return null;
+    return undefined;
   }
 }

@@ -10,16 +10,16 @@ export default class ToolStore {
     makeAutoObservable(this);
   }
 
-  select(tool) {
+  select(tool: Tool) {
     this.selectedTool = tool;
   }
 
-  selectTile(tile) {
+  selectTile(tileId: string) {
     this.selectedTool = 'TILE_DRAW';
-    this.selectedTile = tile;
+    this.selectedTile = tileId;
   }
 
-  setTempMove(val) {
+  setTempMove(val: boolean) {
     this.tempMove = val;
   }
 

@@ -18,11 +18,11 @@ interface CanvasProps {
 }
 
 const Canvas = ({ tools, tiles }: CanvasProps) => {
-  const ref = useRef();
+  const ref = useRef(null);
   useEffect(setup, []);
 
   function setup() {
-    init({ element: ref.current, tools, tiles });
+    init({ element: ref.current!, tools, tiles });
 
     return () => {
       // TODO: cleanup

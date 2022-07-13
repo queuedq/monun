@@ -14,7 +14,7 @@ export const registerShortcuts = (tools: ToolStore) => {
   window.addEventListener('keydown', (event) => {
     Object.entries(shortcuts).forEach(([k, v]) => {
       if (event.code === 'Key' + v) {
-        tools.select(k);
+        tools.select(k as Action);
       }
     })
     if (event.code === 'Space') {
