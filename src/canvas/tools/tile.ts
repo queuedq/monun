@@ -1,5 +1,6 @@
-import Scene from "../Scene";
+import { Tile } from "../../domain/tile";
 import { Vec2 } from "../types";
+import Scene from "../Scene";
 
 export function getTilePos(scene: Scene, cursor: Vec2): Vec2 {
   const pos = scene.camera.toInnerCoordinates(cursor);
@@ -9,7 +10,7 @@ export function getTilePos(scene: Scene, cursor: Vec2): Vec2 {
   );
 }
 
-export function draw({ scene, cursor, tile }) {
+export function draw(scene: Scene, cursor: Vec2, tile: Tile | null) {
   scene.tileMap.draw(getTilePos(scene, cursor), tile);
 }
 

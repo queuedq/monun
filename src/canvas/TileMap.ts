@@ -1,11 +1,13 @@
 import Two from 'two.js';
 import { Group } from 'two.js/src/group';
-import { Path } from 'two.js/src/path';
+import { Shape } from 'two.js/src/shape';
+import { ColorTile, Tile } from '../domain/tile';
+import { Vec2 } from './types';
 
 export default class TileMap {
   layer: Group;
   size: number;
-  tiles: Map<string, Path>;
+  tiles: Map<string, Shape>;
 
   constructor(size) {
     this.layer = new Group();
@@ -17,28 +19,34 @@ export default class TileMap {
     return pos.x + ':' + pos.y;
   }
 
-  draw(pos, tile) {
-    const hash = this.getHash(pos);
-    if (this.tiles.has(hash)) { this.erase(pos); }
-
-    // TODO: extract tile object creation logic
+  private createColorTile(pos: Vec2, tile: ColorTile): Shape {
     const rect = new Two.Rectangle(
       pos.x * this.size + this.size / 2,
       pos.y * this.size + this.size / 2,
       this.size,
       this.size,
     );
+    rect.fill = tile.color;
+    rect.stroke = 'transparent';
+    return rect;
+  }
 
-    if (tile == 'BLUE') {
-      rect.fill = 'rgba(0, 0, 255, 0.3)';
-      rect.stroke = 'rgba(0, 0, 255, 0.8)';
-    } else if (tile == 'RED') {
-      rect.fill = 'rgba(255, 0, 0, 0.3)';
-      rect.stroke = 'rgba(255, 0, 0, 0.8)';
+  private createTile(pos: Vec2, tile: Tile): Shape {
+    switch (tile.type) {
+      case 'ColorTile': return this.createColorTile(pos, tile);
+      case 'ImageTile': return new Two.Shape(); // TODO: ImageTile not implemented
     }
+  }
 
-    this.tiles.set(hash, rect);
-    rect.addTo(this.layer);
+  draw(pos: Vec2, tile: Tile | null) {
+    if (tile === null) return;
+
+    const hash = this.getHash(pos);
+    if (this.tiles.has(hash)) { this.erase(pos); }
+
+    let tileShape = this.createTile(pos, tile);
+    this.tiles.set(hash, tileShape);
+    tileShape.addTo(this.layer);
   }
 
   erase(pos) {

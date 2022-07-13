@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import ToolStore from '../stores/ToolStore';
+import TileStore from '../stores/TileStore';
 import { init } from '../canvas';
 import styles from './Canvas.module.css';
 
@@ -11,12 +12,17 @@ const styleCursor = (tools: ToolStore) => {
   }
 }
 
-const Canvas = ({ tools }) => {
+interface CanvasProps {
+  tools: ToolStore;
+  tiles: TileStore;
+}
+
+const Canvas = ({ tools, tiles }: CanvasProps) => {
   const ref = useRef();
   useEffect(setup, []);
 
   function setup() {
-    init({ element: ref.current, tools });
+    init({ element: ref.current, tools, tiles });
 
     return () => {
       // TODO: cleanup

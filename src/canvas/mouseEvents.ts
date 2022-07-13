@@ -1,13 +1,15 @@
+import TileStore from '../stores/TileStore';
 import ToolStore from '../stores/ToolStore';
 import Scene from './Scene';
 import { pan, zoom } from './tools/move';
 import { draw, erase } from './tools/tile';
 import { Vec2 } from './types';
 
-export const addMouseEvents = ({ element, scene, tools }: {
+export const addMouseEvents = ({ element, scene, tools, tiles }: {
   element: Element,
   scene: Scene,
   tools: ToolStore,
+  tiles: TileStore,
 }) => {
   let dragging = false; // TODO: proper dragging state handling
   let prevCursor = undefined;
@@ -25,7 +27,7 @@ export const addMouseEvents = ({ element, scene, tools }: {
       pan(scene, cursor, prevCursor);
     } else if (tool == 'TILE_DRAW') {
       if (event.buttons === 1) {
-        draw({ scene, cursor, tile: tools.selectedTile });
+        draw(scene, cursor, tiles.getTile(tools.selectedTile));
       } else if (event.buttons === 2) {
         erase({ scene, cursor });
       }
