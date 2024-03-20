@@ -1,6 +1,7 @@
 import { Group } from "two.js/src/group";
 import Camera from "./Camera";
 import Grid from "./Grid";
+import Selection from "./Selection";
 import TileMap from "./TileMap";
 import Viewport from "./Viewport";
 
@@ -8,8 +9,10 @@ export default class Scene {
   scene: Group;
   viewport: Viewport;
   camera: Camera;
+
   tileMap: TileMap;
   grid: Grid;
+  selection: Selection;
 
   constructor(canvasElement: Element, scene: Group) {
     this.scene = scene;
@@ -23,7 +26,11 @@ export default class Scene {
     // Grid layer
     this.grid = new Grid();
     this.grid.layer.addTo(this.scene);
-    
+
+    // Selection layer
+    this.selection = new Selection();
+    this.selection.layer.addTo(this.scene);
+
     // Camera
     this.attachCamera();
   }
@@ -39,6 +46,11 @@ export default class Scene {
       this.grid.layer.translation.x = -cam.translation.x * cam.scale;
       this.grid.layer.translation.y = -cam.translation.y * cam.scale;
       this.grid.update(cam);
+    });
+    this.camera.events.on('update', cam => {
+      this.selection.layer.scale = cam.scale;
+      this.selection.layer.translation.x = -cam.translation.x * cam.scale;
+      this.selection.layer.translation.y = -cam.translation.y * cam.scale;
     });
 
     this.camera.update();

@@ -2,7 +2,7 @@ import TileStore from '../stores/TileStore';
 import ToolStore from '../stores/ToolStore';
 import Scene from './Scene';
 import { pan, zoom } from './tools/move';
-import { draw, erase } from './tools/tile';
+import { draw, erase, getTilePos } from './tools/tile';
 import { Vec2 } from './types';
 
 export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
@@ -45,10 +45,18 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
 
   function onMouseMove(event: MouseEvent) {
     event.preventDefault();
-    if (!dragging) return;
     const cursor = getCursorPos(event);
-    dragTools(scene, event, cursor);
-    prevCursor = cursor;
+
+    // movement
+    scene.selection.update(
+      event.target === canvasElement ? getTilePos(scene, cursor) : undefined
+    );
+
+    // dragging
+    if (dragging) {
+      dragTools(scene, event, cursor);
+      prevCursor = cursor;
+    }
   };
 
   function onWheel(event: WheelEvent) {
