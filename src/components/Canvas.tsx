@@ -22,7 +22,7 @@ const Canvas = ({ tools, tiles }: CanvasProps) => {
   useEffect(setup, []);
 
   function setup() {
-    init({ element: ref.current!, tools, tiles });
+    init({ canvasElement: ref.current!, tools, tiles });
 
     return () => {
       // TODO: cleanup

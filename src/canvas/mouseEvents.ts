@@ -5,8 +5,8 @@ import { pan, zoom } from './tools/move';
 import { draw, erase } from './tools/tile';
 import { Vec2 } from './types';
 
-export const addMouseEvents = ({ element, scene, tools, tiles }: {
-  element: HTMLElement,
+export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
+  canvasElement: HTMLElement,
   scene: Scene,
   tools: ToolStore,
   tiles: TileStore,
@@ -15,7 +15,7 @@ export const addMouseEvents = ({ element, scene, tools, tiles }: {
   let prevCursor = new Vec2(0, 0);
 
   function getCursorPos(event: MouseEvent): Vec2 {
-    const rect = element.getBoundingClientRect(); 
+    const rect = canvasElement.getBoundingClientRect(); 
     const x = event.clientX - (rect.left);
     const y = event.clientY - (rect.top);
     return new Vec2(x, y);
@@ -56,9 +56,9 @@ export const addMouseEvents = ({ element, scene, tools, tiles }: {
     zoom(scene, event.deltaY * -0.003, getCursorPos(event));
   }
 
-  element.addEventListener('mousedown', onMouseDown);
+  canvasElement.addEventListener('mousedown', onMouseDown);
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mouseup', () => { dragging = false; });
-	element.addEventListener('wheel', onWheel, { passive: false });
-  element.addEventListener('contextmenu', event => event.preventDefault());
+	canvasElement.addEventListener('wheel', onWheel, { passive: false });
+  canvasElement.addEventListener('contextmenu', event => event.preventDefault());
 }

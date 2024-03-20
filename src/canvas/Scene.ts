@@ -11,9 +11,9 @@ export default class Scene {
   tileMap: TileMap;
   grid: Grid;
 
-  constructor(element: Element, scene: Group) {
+  constructor(canvasElement: Element, scene: Group) {
     this.scene = scene;
-    this.viewport = new Viewport(element);
+    this.viewport = new Viewport(canvasElement);
     this.camera = new Camera(this.viewport);
     
     // Tile layer

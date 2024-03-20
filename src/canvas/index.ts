@@ -4,14 +4,14 @@ import ToolStore from '../stores/ToolStore';
 import { addMouseEvents } from './mouseEvents';
 import Scene from './Scene';
 
-export const init = ({ element, tools, tiles }: {
-  element: HTMLElement,
+export const init = ({ canvasElement, tools, tiles }: {
+  canvasElement: HTMLElement,
   tools: ToolStore,
   tiles: TileStore,
 }) => {
-  const two = new Two({ autostart: true, fullscreen: true, domElement: element });
+  const two = new Two({ autostart: true, fullscreen: true, domElement: canvasElement });
   
-  const scene = new Scene(element, two.scene);
+  const scene = new Scene(canvasElement, two.scene);
   
-  addMouseEvents({ element, scene, tools, tiles });
+  addMouseEvents({ canvasElement, scene, tools, tiles });
 };
