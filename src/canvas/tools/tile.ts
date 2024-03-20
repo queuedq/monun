@@ -1,12 +1,13 @@
 import { Tile } from "../../domain/tile";
 import { Vec2 } from "../types";
 import Scene from "../Scene";
+import { TILE_SIZE } from "../constants";
 
 export function getTilePos(scene: Scene, cursor: Vec2): Vec2 {
   const pos = scene.camera.toInnerCoordinates(cursor);
   return new Vec2(
-    Math.floor(pos.x / scene.tileMap.tileSize),
-    Math.floor(pos.y / scene.tileMap.tileSize),
+    Math.floor(pos.x / TILE_SIZE),
+    Math.floor(pos.y / TILE_SIZE),
   );
 }
 

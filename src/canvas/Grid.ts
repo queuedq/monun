@@ -2,10 +2,9 @@ import { Group } from "two.js/src/group";
 import { Path } from "two.js/src/path";
 import { Line } from "two.js/src/shapes/line";
 import Camera from "./Camera";
+import { TILE_SIZE } from "./constants";
 
 export default class Grid {
-  gridSize = 50;
-
   layer: Group;
   lines: Array<Path>;
 
@@ -22,7 +21,7 @@ export default class Grid {
     let gridScale = 1;
     if (cam.scale < 0.5) gridScale = 4;
     
-    const grid = this.gridSize * gridScale;
+    const grid = TILE_SIZE * gridScale;
     const radius = 4 / Math.sqrt(cam.scale / gridScale);
 
     const xs = Math.floor(pos.x / grid);

@@ -17,7 +17,7 @@ export default class Scene {
     this.camera = new Camera(this.viewport);
     
     // Tile layer
-    this.tileMap = new TileMap(50);
+    this.tileMap = new TileMap();
     this.tileMap.layer.addTo(this.scene);
     
     // Grid layer
