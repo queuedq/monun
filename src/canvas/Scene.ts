@@ -4,6 +4,9 @@ import Grid from "./Grid";
 import Selection from "./Selection";
 import TileMap from "./TileMap";
 import Viewport from "./Viewport";
+import { Vec2 } from "./types";
+import { Tile } from "../domain/tile";
+import { TILE_SIZE } from "./constants";
 
 export default class Scene {
   scene: Group;
@@ -54,5 +57,35 @@ export default class Scene {
     });
 
     this.camera.update();
+  }
+
+  // Movement
+
+  pan(cursor: Vec2, prevCursor: Vec2) {
+    this.camera.pan(cursor.sub(prevCursor));
+  }
+
+  zoom(delta: number, cursor: Vec2) {
+    this.camera.zoom(delta, cursor);
+  }
+
+  // Drawing
+
+  draw(cursor: Vec2, tile: Tile | undefined) {
+    this.tileMap.draw(this.getTilePos(cursor), tile);
+  }
+
+  erase(cursor: Vec2) {
+    this.tileMap.erase(this.getTilePos(cursor));
+  }
+
+  // Utils
+
+  getTilePos(cursor: Vec2): Vec2 {
+    const pos = this.camera.toInnerCoordinates(cursor);
+    return new Vec2(
+      Math.floor(pos.x / TILE_SIZE),
+      Math.floor(pos.y / TILE_SIZE),
+    );
   }
 }

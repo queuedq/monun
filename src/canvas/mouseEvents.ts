@@ -1,8 +1,6 @@
 import TileStore from '../stores/TileStore';
 import ToolStore from '../stores/ToolStore';
 import Scene from './Scene';
-import { pan, zoom } from './tools/move';
-import { draw, erase, getTilePos } from './tools/tile';
 import { Vec2 } from './types';
 
 export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
@@ -24,15 +22,15 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
   function dragTools(scene: Scene, event: MouseEvent, cursor: Vec2) {
     const tool = tools.currentTool;
     if (tool == 'MOVE') {
-      pan(scene, cursor, prevCursor);
+      scene.pan(cursor, prevCursor);
     } else if (tool == 'TILE_DRAW') {
       if (event.buttons === 1) {
-        draw(scene, cursor, tiles.getTile(tools.selectedTile));
+        scene.draw(cursor, tiles.getTile(tools.selectedTile));
       } else if (event.buttons === 2) {
-        erase(scene, cursor);
+        scene.erase(cursor);
       }
     } else if (tool == 'TILE_ERASE') {
-      erase(scene, cursor);
+      scene.erase(cursor);
     }
   }
 
@@ -46,7 +44,7 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
       case 'TILE_DRAW':
       case 'TILE_ERASE':
         selection.updateHover(
-          event.target === canvasElement ? getTilePos(scene, cursor) : undefined
+          event.target === canvasElement ? scene.getTilePos(cursor) : undefined
         )
         break;
     }
@@ -75,7 +73,7 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
 
   function onWheel(event: WheelEvent) {
     event.preventDefault();
-    zoom(scene, event.deltaY * -0.003, getCursorPos(event));
+    scene.zoom(event.deltaY * -0.003, getCursorPos(event));
   }
 
   canvasElement.addEventListener('mousedown', onMouseDown);
