@@ -12,7 +12,7 @@ export default class Selection {
     this.layer = new Group();
   }
 
-  update(pos: Vec2 | undefined) {
+  updateHover(pos: Vec2 | undefined) {
     this.hoverOutline?.remove();
     if (pos) {
       this.hoverOutline = this.createHoverOutline(pos);

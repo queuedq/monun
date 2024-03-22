@@ -36,6 +36,22 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
     }
   }
 
+  function updateHover(event: MouseEvent, cursor: Vec2) {
+    const { selection } = scene;
+    switch (tools.currentTool) {
+      case 'MOVE':
+        selection.updateHover(undefined);
+        break;
+
+      case 'TILE_DRAW':
+      case 'TILE_ERASE':
+        selection.updateHover(
+          event.target === canvasElement ? getTilePos(scene, cursor) : undefined
+        )
+        break;
+    }
+  }
+
   function onMouseDown(event: MouseEvent) {
     event.preventDefault();
     dragging = true;
@@ -48,9 +64,7 @@ export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
     const cursor = getCursorPos(event);
 
     // movement
-    scene.selection.update(
-      event.target === canvasElement ? getTilePos(scene, cursor) : undefined
-    );
+    updateHover(event, cursor);
 
     // dragging
     if (dragging) {
