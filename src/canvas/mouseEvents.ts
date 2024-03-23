@@ -1,84 +1,73 @@
-import TileStore from '../stores/TileStore';
-import ToolStore from '../stores/ToolStore';
-import Scene from './Scene';
-import { Vec2 } from './types';
+import Scene from "./Scene";
+import { ToolBehavior } from "./tools";
+import { Vec2 } from "./types";
 
-export const addMouseEvents = ({ canvasElement, scene, tools, tiles }: {
-  canvasElement: HTMLElement,
-  scene: Scene,
-  tools: ToolStore,
-  tiles: TileStore,
+export const addMouseEvents = ({
+  canvasElement,
+  scene,
+  getCurrentTool,
+}: {
+  canvasElement: HTMLElement;
+  scene: Scene;
+  getCurrentTool: () => ToolBehavior;
 }) => {
-  let dragging = false; // TODO: proper dragging state handling
+  // Dragging states
+  let dragging = false;
+  let dragStart = new Vec2(0, 0);
   let prevCursor = new Vec2(0, 0);
 
   function getCursorPos(event: MouseEvent): Vec2 {
-    const rect = canvasElement.getBoundingClientRect(); 
-    const x = event.clientX - (rect.left);
-    const y = event.clientY - (rect.top);
+    const rect = canvasElement.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
     return new Vec2(x, y);
   }
 
-  function dragTools(scene: Scene, event: MouseEvent, cursor: Vec2) {
-    const tool = tools.currentTool;
-    if (tool == 'MOVE') {
-      scene.pan(cursor, prevCursor);
-    } else if (tool == 'TILE_DRAW') {
-      if (event.buttons === 1) {
-        scene.draw(cursor, tiles.getTile(tools.selectedTile));
-      } else if (event.buttons === 2) {
-        scene.erase(cursor);
-      }
-    } else if (tool == 'TILE_ERASE') {
-      scene.erase(cursor);
-    }
-  }
+  // Mouse hover / drag
 
-  function updateHover(event: MouseEvent, cursor: Vec2) {
-    const { selection } = scene;
-    switch (tools.currentTool) {
-      case 'MOVE':
-        selection.updateHover(undefined);
-        break;
-
-      case 'TILE_DRAW':
-      case 'TILE_ERASE':
-        selection.updateHover(
-          event.target === canvasElement ? scene.getTilePos(cursor) : undefined
-        )
-        break;
-    }
-  }
-
-  function onMouseDown(event: MouseEvent) {
-    event.preventDefault();
-    dragging = true;
-    prevCursor = getCursorPos(event);
-    dragTools(scene, event, prevCursor);
-  }
-
-  function onMouseMove(event: MouseEvent) {
+  canvasElement.addEventListener("mousedown", (event: MouseEvent) => {
     event.preventDefault();
     const cursor = getCursorPos(event);
+    dragging = true;
+    dragStart = cursor;
+    prevCursor = cursor;
+    const context = { cursor, delta: new Vec2(0, 0), start: dragStart };
 
-    // movement
-    updateHover(event, cursor);
+    getCurrentTool().onDragStart?.(scene, context, event);
+    getCurrentTool().onDragging?.(scene, context, event);
+  });
 
-    // dragging
-    if (dragging) {
-      dragTools(scene, event, cursor);
-      prevCursor = cursor;
-    }
-  };
-
-  function onWheel(event: WheelEvent) {
+  window.addEventListener("mousemove", (event: MouseEvent) => {
     event.preventDefault();
-    scene.zoom(event.deltaY * -0.003, getCursorPos(event));
-  }
+    const cursor = getCursorPos(event);
+    const context = { cursor, delta: cursor.sub(prevCursor), start: dragStart };
 
-  canvasElement.addEventListener('mousedown', onMouseDown);
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', () => { dragging = false; });
-	canvasElement.addEventListener('wheel', onWheel, { passive: false });
-  canvasElement.addEventListener('contextmenu', event => event.preventDefault());
-}
+    getCurrentTool().onHover?.(scene, cursor, event);
+    if (dragging) getCurrentTool().onDragging?.(scene, context, event);
+    prevCursor = cursor;
+  });
+
+  window.addEventListener("mouseup", (event: MouseEvent) => {
+    event.preventDefault();
+    const cursor = getCursorPos(event);
+    const context = { cursor, delta: cursor.sub(prevCursor), start: dragStart };
+
+    getCurrentTool().onDragEnd?.(scene, context, event);
+    dragging = false;
+  });
+
+  // Other mouse actions
+
+  canvasElement.addEventListener(
+    "wheel",
+    (event: WheelEvent) => {
+      event.preventDefault();
+      scene.zoom(event.deltaY * -0.003, getCursorPos(event));
+    },
+    { passive: false }
+  );
+
+  canvasElement.addEventListener("contextmenu", (event) =>
+    event.preventDefault()
+  );
+};

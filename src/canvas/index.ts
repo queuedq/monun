@@ -3,6 +3,7 @@ import TileStore from '../stores/TileStore';
 import ToolStore from '../stores/ToolStore';
 import { addMouseEvents } from './mouseEvents';
 import Scene from './Scene';
+import { createEraseTool, createMoveTool, createTileTool, ToolBehavior } from './tools';
 
 export const init = ({ canvasElement, tools, tiles }: {
   canvasElement: HTMLElement,
@@ -13,5 +14,21 @@ export const init = ({ canvasElement, tools, tiles }: {
   
   const scene = new Scene(canvasElement, two.scene);
   
-  addMouseEvents({ canvasElement, scene, tools, tiles });
+  // Tool behaviors
+  const moveTool = createMoveTool();
+  const tileTool = createTileTool(tools, tiles);
+  const eraseTool = createEraseTool();
+
+  function getCurrentTool(): ToolBehavior {
+    switch (tools.currentTool) {
+      case "MOVE":
+        return moveTool;
+      case "TILE_DRAW":
+        return tileTool;
+      case "TILE_ERASE":
+        return eraseTool;
+    }
+  }
+
+  addMouseEvents({ canvasElement, scene, getCurrentTool });
 };

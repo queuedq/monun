@@ -61,8 +61,8 @@ export default class Scene {
 
   // Movement
 
-  pan(cursor: Vec2, prevCursor: Vec2) {
-    this.camera.pan(cursor.sub(prevCursor));
+  pan(delta: Vec2) {
+    this.camera.pan(delta);
   }
 
   zoom(delta: number, cursor: Vec2) {
