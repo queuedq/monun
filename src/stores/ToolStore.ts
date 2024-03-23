@@ -1,9 +1,9 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable } from "mobx";
 import { Tool } from "../features/toolbox/tools";
 
 export default class ToolStore {
-  private selectedTool: Tool = 'TILE_DRAW';
-  selectedTile = 'BLUE';
+  private selectedTool: Tool = "TILE_DRAW";
+  selectedTile = "BLUE";
   tempMove = false;
 
   constructor() {
@@ -15,7 +15,7 @@ export default class ToolStore {
   }
 
   selectTile(tileId: string) {
-    this.selectedTool = 'TILE_DRAW';
+    this.selectedTool = "TILE_DRAW";
     this.selectedTile = tileId;
   }
 
@@ -26,6 +26,6 @@ export default class ToolStore {
   /// Returns the currently selected tool,
   /// also considering whether the user temporarily switched to another tool.
   get currentTool(): Tool {
-    return this.tempMove ? 'MOVE' : this.selectedTool;
+    return this.tempMove ? "MOVE" : this.selectedTool;
   }
 }

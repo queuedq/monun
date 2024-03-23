@@ -1,5 +1,5 @@
-import * as React from 'react';
-import styles from './Sidebar.module.css';
+import * as React from "react";
+import styles from "./Sidebar.module.css";
 
 interface SidebarProps {
   children?: React.ReactNode;
@@ -8,12 +8,10 @@ interface SidebarProps {
 const Sidebar = ({ children }: SidebarProps) => {
   return (
     <div className={styles.sidebar}>
-      <div>
-
-      </div>
+      <div></div>
       {children}
     </div>
   );
-}
+};
 
 export default Sidebar;

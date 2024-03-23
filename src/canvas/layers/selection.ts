@@ -27,8 +27,8 @@ export default class Selection {
       TILE_SIZE,
       TILE_SIZE,
     );
-    rect.fill = 'transparent';
-    rect.stroke = '#000';
+    rect.fill = "transparent";
+    rect.stroke = "#000";
     rect.linewidth = 2;
     return rect;
   }

@@ -21,11 +21,11 @@ export default class Scene {
     this.scene = scene;
     this.viewport = new Viewport(canvasElement);
     this.camera = new Camera(this.viewport);
-    
+
     // Tile layer
     this.tileMap = new TileMap();
     this.tileMap.layer.addTo(this.scene);
-    
+
     // Grid layer
     this.grid = new Grid();
     this.grid.layer.addTo(this.scene);
@@ -39,18 +39,18 @@ export default class Scene {
   }
 
   attachCamera() {
-    this.camera.events.on('update', cam => {
+    this.camera.events.on("update", (cam) => {
       this.tileMap.layer.scale = cam.scale;
       this.tileMap.layer.translation.x = -cam.translation.x * cam.scale;
       this.tileMap.layer.translation.y = -cam.translation.y * cam.scale;
     });
-    this.camera.events.on('update', cam => {
+    this.camera.events.on("update", (cam) => {
       this.grid.layer.scale = cam.scale;
       this.grid.layer.translation.x = -cam.translation.x * cam.scale;
       this.grid.layer.translation.y = -cam.translation.y * cam.scale;
       this.grid.update(cam);
     });
-    this.camera.events.on('update', cam => {
+    this.camera.events.on("update", (cam) => {
       this.selection.layer.scale = cam.scale;
       this.selection.layer.translation.x = -cam.translation.x * cam.scale;
       this.selection.layer.translation.y = -cam.translation.y * cam.scale;

@@ -15,7 +15,7 @@ export interface CameraEvent {
 export default class Camera {
   minZoom: number;
   maxZoom: number;
-  
+
   translation: Vec2;
   scale: number;
 
@@ -25,19 +25,19 @@ export default class Camera {
   constructor(viewport: Viewport) {
     this.minZoom = 0.25;
     this.maxZoom = 10;
-    
+
     this.translation = Vec2.zero();
     this.scale = 1;
 
     this.viewport = viewport;
     this.events = createNanoEvents<CameraEvent>();
-    
-    this.viewport.events.on('resize', this.update);
+
+    this.viewport.events.on("resize", this.update);
   }
 
   update = () => {
-    this.events.emit('update', this);
-  }
+    this.events.emit("update", this);
+  };
 
   pan(delta: Vec2) {
     this.translation = this.translation.sub(delta.scale(1 / this.scale));
@@ -48,16 +48,16 @@ export default class Camera {
   zoom(delta: number, pivot: Vec2) {
     const { translation, scale } = this;
     const innerPivot = this.toInnerCoordinates(pivot);
-    
+
     let newScale = scale * Math.exp(delta);
     newScale = Math.max(newScale, this.minZoom);
     newScale = Math.min(newScale, this.maxZoom);
-    
+
     this.translation = innerPivot.add(
-      translation.sub(innerPivot).scale(scale / newScale)
+      translation.sub(innerPivot).scale(scale / newScale),
     );
     this.scale = newScale;
-    
+
     this.update();
   }
 

@@ -1,9 +1,9 @@
-import Two from 'two.js';
-import { Group } from 'two.js/src/group';
-import { Shape } from 'two.js/src/shape';
-import { ColorTile, Tile } from '../../domain/tile';
-import { TILE_SIZE } from '../constants';
-import { Vec2 } from '../types';
+import Two from "two.js";
+import { Group } from "two.js/src/group";
+import { Shape } from "two.js/src/shape";
+import { ColorTile, Tile } from "../../domain/tile";
+import { TILE_SIZE } from "../constants";
+import { Vec2 } from "../types";
 
 export default class TileMap {
   layer: Group;
@@ -15,7 +15,7 @@ export default class TileMap {
   }
 
   getHash(pos: Vec2) {
-    return pos.x + ':' + pos.y;
+    return pos.x + ":" + pos.y;
   }
 
   private createColorTile(pos: Vec2, tile: ColorTile): Shape {
@@ -26,14 +26,16 @@ export default class TileMap {
       TILE_SIZE,
     );
     rect.fill = tile.color;
-    rect.stroke = 'transparent';
+    rect.stroke = "transparent";
     return rect;
   }
 
   private createTile(pos: Vec2, tile: Tile): Shape {
     switch (tile.type) {
-      case 'ColorTile': return this.createColorTile(pos, tile);
-      case 'ImageTile': return new Two.Shape(); // TODO: ImageTile not implemented
+      case "ColorTile":
+        return this.createColorTile(pos, tile);
+      case "ImageTile":
+        return new Two.Shape(); // TODO: ImageTile not implemented
     }
   }
 
@@ -41,7 +43,9 @@ export default class TileMap {
     if (tile === undefined) return;
 
     const hash = this.getHash(pos);
-    if (this.tiles.has(hash)) { this.erase(pos); }
+    if (this.tiles.has(hash)) {
+      this.erase(pos);
+    }
 
     let tileShape = this.createTile(pos, tile);
     this.tiles.set(hash, tileShape);

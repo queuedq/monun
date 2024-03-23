@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { useEffect, useRef } from 'react';
-import { observer } from 'mobx-react-lite';
-import ToolStore from '../stores/ToolStore';
-import TileStore from '../stores/TileStore';
-import { init } from '../canvas';
-import styles from './Canvas.module.css';
+import * as React from "react";
+import { useEffect, useRef } from "react";
+import { observer } from "mobx-react-lite";
+import ToolStore from "../stores/ToolStore";
+import TileStore from "../stores/TileStore";
+import { init } from "../canvas";
+import styles from "./Canvas.module.css";
 
 const styleCursor = (tools: ToolStore) => {
   return {
-    cursor: tools.currentTool == 'MOVE' ? 'move' : 'auto',
-  }
-}
+    cursor: tools.currentTool == "MOVE" ? "move" : "auto",
+  };
+};
 
 interface CanvasProps {
   tools: ToolStore;
@@ -26,12 +26,12 @@ const Canvas = ({ tools, tiles }: CanvasProps) => {
 
     return () => {
       // TODO: cleanup
-    }
+    };
   }
 
   return (
     <canvas className={styles.canvas} style={styleCursor(tools)} ref={ref} />
   );
-}
+};
 
 export default observer(Canvas);

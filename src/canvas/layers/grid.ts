@@ -16,11 +16,11 @@ export default class Grid {
   }
 
   update = (cam: Camera) => {
-    const {pos, width, height} = cam.visibleRect;
-    
+    const { pos, width, height } = cam.visibleRect;
+
     let gridScale = 1;
     if (cam.scale < 0.5) gridScale = 4;
-    
+
     const grid = TILE_SIZE * gridScale;
     const radius = 4 / Math.sqrt(cam.scale / gridScale);
 
@@ -28,19 +28,19 @@ export default class Grid {
     const xe = Math.ceil((pos.x + width) / grid);
     const ys = Math.floor(pos.y / grid);
     const ye = Math.ceil((pos.y + height) / grid);
-    const cnt = (xe-xs+1) + (ye-ys+1);
+    const cnt = xe - xs + 1 + (ye - ys + 1);
 
     while (this.lines.length < cnt) {
       this.lines.push(Grid.makeLine(this.layer));
     }
-    
+
     let i = 0;
     for (let x = xs; x <= xe; x++, i++) {
       this.lines[i].vertices[0].x = x * grid;
       this.lines[i].vertices[0].y = ys * grid;
       this.lines[i].vertices[1].x = x * grid;
       this.lines[i].vertices[1].y = ye * grid;
-      
+
       this.lines[i].linewidth = 1 / cam.scale;
       this.lines[i].dashes = [radius, grid - radius * 2, radius, 0];
       this.lines[i].visible = true;
@@ -50,7 +50,7 @@ export default class Grid {
       this.lines[i].vertices[0].y = y * grid;
       this.lines[i].vertices[1].x = xe * grid;
       this.lines[i].vertices[1].y = y * grid;
-      
+
       this.lines[i].linewidth = 1 / cam.scale;
       this.lines[i].dashes = [radius, grid - radius * 2, radius, 0];
       this.lines[i].visible = true;
@@ -60,11 +60,11 @@ export default class Grid {
     for (; i < this.lines.length; i++) {
       this.lines[i].visible = false;
     }
-  }
+  };
 
   private static makeLine(group: Group): Path {
     const line = new Line(0, 0, 0, 0);
-    line.stroke = '#000000';
+    line.stroke = "#000000";
     line.addTo(group);
     return line;
   }

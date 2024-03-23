@@ -7,12 +7,12 @@ export interface ViewportEvent {
 export default class Viewport {
   width: number;
   height: number;
-  
+
   resizeObserver: ResizeObserver;
   events: Emitter<ViewportEvent>;
 
   constructor(element: Element) {
-    const {width, height} = element.getBoundingClientRect();
+    const { width, height } = element.getBoundingClientRect();
     this.width = width;
     this.height = height;
 
@@ -27,6 +27,6 @@ export default class Viewport {
   }
 
   update() {
-    this.events.emit('resize', this);
+    this.events.emit("resize", this);
   }
 }

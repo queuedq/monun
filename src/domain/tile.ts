@@ -3,12 +3,12 @@ interface TileBase {
 }
 
 export interface ImageTile extends TileBase {
-  type: 'ImageTile';
+  type: "ImageTile";
   img: HTMLImageElement;
 }
 
 export interface ColorTile extends TileBase {
-  type: 'ColorTile';
+  type: "ColorTile";
   color: string;
 }
 

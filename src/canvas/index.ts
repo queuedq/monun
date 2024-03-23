@@ -1,19 +1,32 @@
-import Two from 'two.js';
-import TileStore from '../stores/TileStore';
-import ToolStore from '../stores/ToolStore';
-import { addMouseEvents } from './mouse-event';
-import Scene from './scene';
-import { createEraseTool, createMoveTool, createTileTool, ToolBehavior } from './tools';
+import Two from "two.js";
+import TileStore from "../stores/TileStore";
+import ToolStore from "../stores/ToolStore";
+import { addMouseEvents } from "./mouse-event";
+import Scene from "./scene";
+import {
+  createEraseTool,
+  createMoveTool,
+  createTileTool,
+  ToolBehavior,
+} from "./tools";
 
-export const init = ({ canvasElement, tools, tiles }: {
-  canvasElement: HTMLElement,
-  tools: ToolStore,
-  tiles: TileStore,
+export const init = ({
+  canvasElement,
+  tools,
+  tiles,
+}: {
+  canvasElement: HTMLElement;
+  tools: ToolStore;
+  tiles: TileStore;
 }) => {
-  const two = new Two({ autostart: true, fullscreen: true, domElement: canvasElement });
-  
+  const two = new Two({
+    autostart: true,
+    fullscreen: true,
+    domElement: canvasElement,
+  });
+
   const scene = new Scene(canvasElement, two.scene);
-  
+
   // Tool behaviors
   const moveTool = createMoveTool();
   const tileTool = createTileTool(tools, tiles);

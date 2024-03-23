@@ -81,7 +81,7 @@ export const addMouseEvents = ({
       // TODO: Implement drag end event
       // Apparently we need a low level API of MobX?
       // https://github.com/mobxjs/mobx/issues/1785
-    }
+    },
   );
 
   // Other mouse actions
@@ -92,10 +92,10 @@ export const addMouseEvents = ({
       event.preventDefault();
       scene.zoom(event.deltaY * -0.003, getCursorPos(event));
     },
-    { passive: false }
+    { passive: false },
   );
 
   canvasElement.addEventListener("contextmenu", (event) =>
-    event.preventDefault()
+    event.preventDefault(),
   );
 };

@@ -27,7 +27,10 @@ export const createMoveTool = (): ToolBehavior => ({
   },
 });
 
-export const createTileTool = (tools: ToolStore, tiles: TileStore): ToolBehavior => ({
+export const createTileTool = (
+  tools: ToolStore,
+  tiles: TileStore,
+): ToolBehavior => ({
   onHover(scene: Scene, cursor: Vec2) {
     scene.selection.updateHover(scene.getTilePos(cursor));
   },
