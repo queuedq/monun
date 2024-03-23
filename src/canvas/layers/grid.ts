@@ -1,8 +1,8 @@
 import { Group } from "two.js/src/group";
 import { Path } from "two.js/src/path";
 import { Line } from "two.js/src/shapes/line";
-import Camera from "./Camera";
-import { TILE_SIZE } from "./constants";
+import Camera from "../camera";
+import { TILE_SIZE } from "../constants";
 
 export default class Grid {
   layer: Group;

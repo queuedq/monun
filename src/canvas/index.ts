@@ -1,8 +1,8 @@
 import Two from 'two.js';
 import TileStore from '../stores/TileStore';
 import ToolStore from '../stores/ToolStore';
-import { addMouseEvents } from './mouseEvents';
-import Scene from './Scene';
+import { addMouseEvents } from './mouse-events';
+import Scene from './scene';
 import { createEraseTool, createMoveTool, createTileTool, ToolBehavior } from './tools';
 
 export const init = ({ canvasElement, tools, tiles }: {

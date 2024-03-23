@@ -1,9 +1,9 @@
 import { Group } from "two.js/src/group";
-import Camera from "./Camera";
-import Grid from "./Grid";
-import Selection from "./Selection";
-import TileMap from "./TileMap";
-import Viewport from "./Viewport";
+import Camera from "./camera";
+import Grid from "./layers/grid";
+import Selection from "./layers/selection";
+import TileMap from "./layers/tile-map";
+import Viewport from "./viewport";
 import { Vec2 } from "./types";
 import { Tile } from "../domain/tile";
 import { TILE_SIZE } from "./constants";

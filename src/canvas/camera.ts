@@ -1,6 +1,6 @@
 import { createNanoEvents, Emitter } from "nanoevents";
 import { Vec2 } from "./types";
-import Viewport from "./Viewport";
+import Viewport from "./viewport";
 
 export interface VisibleRect {
   pos: Vec2;

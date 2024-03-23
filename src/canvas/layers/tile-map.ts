@@ -1,9 +1,9 @@
 import Two from 'two.js';
 import { Group } from 'two.js/src/group';
 import { Shape } from 'two.js/src/shape';
-import { ColorTile, Tile } from '../domain/tile';
-import { TILE_SIZE } from './constants';
-import { Vec2 } from './types';
+import { ColorTile, Tile } from '../../domain/tile';
+import { TILE_SIZE } from '../constants';
+import { Vec2 } from '../types';
 
 export default class TileMap {
   layer: Group;

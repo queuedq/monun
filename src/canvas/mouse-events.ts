@@ -1,6 +1,6 @@
 import { reaction } from "mobx";
 import ToolStore from "../stores/ToolStore";
-import Scene from "./Scene";
+import Scene from "./scene";
 import { DragContext, ToolBehavior } from "./tools";
 import { Vec2 } from "./types";
 

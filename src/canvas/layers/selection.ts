@@ -1,8 +1,8 @@
 import Two from "two.js";
 import { Group } from "two.js/src/group";
 import { Shape } from "two.js/src/shape";
-import { TILE_SIZE } from "./constants";
-import { Vec2 } from "./types";
+import { TILE_SIZE } from "../constants";
+import { Vec2 } from "../types";
 
 export default class Selection {
   layer: Group;
