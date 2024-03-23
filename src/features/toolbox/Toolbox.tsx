@@ -2,7 +2,7 @@ import * as React from "react";
 import classnames from "classnames";
 import { observer } from "mobx-react-lite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ToolStore from "../../stores/ToolStore";
+import ToolStore from "../../stores/tool-store";
 import { Tool, toolDefinitions } from "./tools";
 import { getShortcut } from "../shortcuts";
 import styles from "./Toolbox.module.scss";

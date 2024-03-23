@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { Tile } from "../domain/tile";
-import { defaultTiles } from "../features/tileSelect/defaultTiles";
+import { defaultTiles } from "../features/tileSelect/default-tiles";
 
 export default class TileStore {
   tileList: Map<string, Tile> = new Map();

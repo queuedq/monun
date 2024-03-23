@@ -1,6 +1,6 @@
 import Two from "two.js";
-import TileStore from "../stores/TileStore";
-import ToolStore from "../stores/ToolStore";
+import TileStore from "../stores/tile-store";
+import ToolStore from "../stores/tool-store";
 import { addMouseEvents } from "./mouse-event";
 import Scene from "./scene";
 import {

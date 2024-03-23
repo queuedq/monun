@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import ToolStore from "../stores/ToolStore";
-import TileStore from "../stores/TileStore";
+import ToolStore from "../stores/tool-store";
+import TileStore from "../stores/tile-store";
 import { init } from "../canvas";
 import styles from "./Canvas.module.css";
 

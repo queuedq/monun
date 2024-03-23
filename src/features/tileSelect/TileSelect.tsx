@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer } from "mobx-react-lite";
-import ToolStore from "../../stores/ToolStore";
-import TileStore from "../../stores/TileStore";
+import ToolStore from "../../stores/tool-store";
+import TileStore from "../../stores/tile-store";
 import { ColorTileButton } from "./TileButtons";
 
 interface TileSelectProps {

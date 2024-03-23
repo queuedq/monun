@@ -3,8 +3,8 @@ import Canvas from "./Canvas";
 import Sidebar from "./Sidebar";
 import Toolbox from "../features/toolbox/Toolbox";
 import TileSelect from "../features/tileSelect/TileSelect";
-import ToolStore from "../stores/ToolStore";
-import TileStore from "../stores/TileStore";
+import ToolStore from "../stores/tool-store";
+import TileStore from "../stores/tile-store";
 import { registerShortcuts } from "../features/shortcuts";
 
 const tools = new ToolStore();

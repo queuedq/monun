@@ -1,4 +1,4 @@
-import ToolStore from "../stores/ToolStore";
+import ToolStore from "../stores/tool-store";
 import { Action } from "./actions";
 
 // TODO: use proper shortcut type instead of string

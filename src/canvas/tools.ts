@@ -1,5 +1,5 @@
-import TileStore from "../stores/TileStore";
-import ToolStore from "../stores/ToolStore";
+import TileStore from "../stores/tile-store";
+import ToolStore from "../stores/tool-store";
 import Scene from "./scene";
 import { Vec2 } from "./types";
 
