@@ -30,5 +30,5 @@ export const init = ({ canvasElement, tools, tiles }: {
     }
   }
 
-  addMouseEvents({ canvasElement, scene, getCurrentTool });
+  addMouseEvents({ canvasElement, scene, tools, getCurrentTool });
 };
