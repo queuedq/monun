@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import ToolStore from "../stores/tool-store";
 import TileStore from "../stores/tile-store";
 import { init } from "../canvas";
-import styles from "./Canvas.module.css";
 
 const styleCursor = (tools: ToolStore) => {
   return {
@@ -30,7 +29,7 @@ const Canvas = ({ tools, tiles }: CanvasProps) => {
   }
 
   return (
-    <canvas className={styles.canvas} style={styleCursor(tools)} ref={ref} />
+    <canvas className="w-full h-full" style={styleCursor(tools)} ref={ref} />
   );
 };
 

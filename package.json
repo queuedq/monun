@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "vite",
     "check": "tsc --noEmit"
   },
   "author": "",
@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/react": "^18.2.67",
     "classnames": "^2.3.1",
+    "clsx": "^2.1.0",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^4.0.6",
     "nanoevents": "^9.0.0",
@@ -23,14 +24,17 @@
     "postcss-modules": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss": "^3.4.1",
     "two.js": "^0.8.5",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "vite": "^5.2.6"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.2",
     "@types/react-dom": "^18.0.6",
-    "autoprefixer": "^10.4.4",
-    "postcss": "^8.4.12",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
     "process": "^0.11.10",
     "typescript-plugin-css-modules": "^5.1.0"
   },
