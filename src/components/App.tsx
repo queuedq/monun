@@ -17,7 +17,9 @@ const App = () => {
   return (
     <>
       <Canvas tools={tools} tiles={tiles} />
-      <Toolbox tools={tools} />
+      <div className="flex justify-center mt-2">
+        <Toolbox tools={tools} />
+      </div>
       <Sidebar>
         <TileSelect tools={tools} tiles={tiles} />
       </Sidebar>
