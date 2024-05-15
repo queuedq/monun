@@ -5,7 +5,6 @@ import Selection from "./layers/selection";
 import TileMap from "./layers/tile-map";
 import Viewport from "./viewport";
 import { Vec2 } from "./types";
-import { Tile } from "../domain/tile";
 import { TILE_SIZE } from "./constants";
 
 export default class Scene {
@@ -57,26 +56,6 @@ export default class Scene {
     });
 
     this.camera.update();
-  }
-
-  // Movement
-
-  pan(delta: Vec2) {
-    this.camera.pan(delta);
-  }
-
-  zoom(delta: number, cursor: Vec2) {
-    this.camera.zoom(delta, cursor);
-  }
-
-  // Drawing
-
-  draw(cursor: Vec2, tile: Tile | undefined) {
-    this.tileMap.draw(this.getTilePos(cursor), tile);
-  }
-
-  erase(cursor: Vec2) {
-    this.tileMap.erase(this.getTilePos(cursor));
   }
 
   // Utils

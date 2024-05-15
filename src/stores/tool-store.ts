@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { Tool } from "../features/toolbox/tools";
 
 export default class ToolStore {
-  private selectedTool: Tool = "TILE_DRAW";
+  selectedTool: Tool = "TILE_DRAW";
   selectedTile = "BLUE";
   tempMove = false;
 

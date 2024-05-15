@@ -52,9 +52,35 @@ export default class TileMap {
     tileShape.addTo(this.layer);
   }
 
+  drawRect(startPos: Vec2, endPos: Vec2, tile: Tile | undefined) {
+    const sx = Math.min(startPos.x, endPos.x);
+    const sy = Math.min(startPos.y, endPos.y);
+    const ex = Math.max(startPos.x, endPos.x);
+    const ey = Math.max(startPos.y, endPos.y);
+
+    for (let x = sx; x <= ex; x++) {
+      for (let y = sy; y <= ey; y++) {
+        this.draw(new Vec2(x, y), tile);
+      }
+    }
+  }
+
   erase(pos: Vec2) {
     const hash = this.getHash(pos);
     this.tiles.get(hash)?.remove();
     this.tiles.delete(hash);
+  }
+
+  eraseRect(startPos: Vec2, endPos: Vec2) {
+    const sx = Math.min(startPos.x, endPos.x);
+    const sy = Math.min(startPos.y, endPos.y);
+    const ex = Math.max(startPos.x, endPos.x);
+    const ey = Math.max(startPos.y, endPos.y);
+
+    for (let x = sx; x <= ex; x++) {
+      for (let y = sy; y <= ey; y++) {
+        this.erase(new Vec2(x, y));
+      }
+    }
   }
 }

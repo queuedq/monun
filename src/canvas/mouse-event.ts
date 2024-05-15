@@ -1,7 +1,7 @@
 import { reaction } from "mobx";
 import ToolStore from "../stores/tool-store";
 import Scene from "./scene";
-import { DragContext, ToolBehavior } from "./tools";
+import { MutableDragContext, ToolBehavior } from "./tools/types";
 import { Vec2 } from "./types";
 
 export const addMouseEvents = ({
@@ -15,13 +15,7 @@ export const addMouseEvents = ({
   tools: ToolStore;
   getCurrentTool: () => ToolBehavior;
 }) => {
-  // Dragging state
-  const state = {
-    dragging: false,
-    dragStart: new Vec2(0, 0),
-    cursor: new Vec2(0, 0),
-    prevCursor: new Vec2(0, 0),
-  };
+  const context = new MutableDragContext(scene);
 
   const getCursorPos = (event: MouseEvent): Vec2 => {
     const rect = canvasElement.getBoundingClientRect();
@@ -30,57 +24,45 @@ export const addMouseEvents = ({
     return new Vec2(x, y);
   };
 
-  const updateCursor = (event: MouseEvent) => {
-    state.prevCursor = state.cursor;
-    state.cursor = getCursorPos(event);
-  };
-
-  const getDragContext = (): DragContext => {
-    return {
-      cursor: state.cursor,
-      delta: state.cursor.sub(state.prevCursor),
-      start: state.dragStart,
-    };
-  };
-
   // Mouse hover / drag
 
   canvasElement.addEventListener("mousedown", (event: MouseEvent) => {
     event.preventDefault();
-    updateCursor(event);
-    state.dragging = true;
+    context.updateCursor(getCursorPos(event));
 
-    const context = getDragContext();
-    getCurrentTool().onDragStart?.(scene, context, event);
-    getCurrentTool().onDragging?.(scene, context, event);
+    context.startDragging(event);
+    getCurrentTool().onDragStart?.(scene, context);
+    getCurrentTool().onDragging?.(scene, context);
   });
 
   window.addEventListener("mousemove", (event: MouseEvent) => {
     event.preventDefault();
-    updateCursor(event);
+    context.updateCursor(getCursorPos(event));
 
-    const context = getDragContext();
-    getCurrentTool().onHover?.(scene, state.cursor, event);
-    if (state.dragging) getCurrentTool().onDragging?.(scene, context, event);
+    getCurrentTool().onHover?.(scene, context);
+    if (context.isDragging) getCurrentTool().onDragging?.(scene, context);
   });
 
   window.addEventListener("mouseup", (event: MouseEvent) => {
     event.preventDefault();
-    updateCursor(event);
-    state.dragging = false;
+    context.updateCursor(getCursorPos(event));
 
-    const context = getDragContext();
-    getCurrentTool().onDragEnd?.(scene, context, event);
+    getCurrentTool().onDragEnd?.(scene, context);
+    context.resetDragging();
+    getCurrentTool().onHover?.(scene, context);
   });
 
   // Also register hover & drag end event on tool change
   reaction(
-    () => tools.currentTool,
+    () => tools.selectedTool,
     () => {
-      getCurrentTool().onHover?.(scene, state.cursor);
       // TODO: Implement drag end event
       // Apparently we need a low level API of MobX?
       // https://github.com/mobxjs/mobx/issues/1785
+      // UPD: Maybe it is enough to reset dragging state? (line below)
+      // TODO: Don't reset dragging state when in temporary move tool
+      context.resetDragging();
+      getCurrentTool().onHover?.(scene, context);
     },
   );
 
@@ -90,7 +72,7 @@ export const addMouseEvents = ({
     "wheel",
     (event: WheelEvent) => {
       event.preventDefault();
-      scene.zoom(event.deltaY * -0.003, getCursorPos(event));
+      scene.camera.zoom(event.deltaY * -0.003, getCursorPos(event));
     },
     { passive: false },
   );
