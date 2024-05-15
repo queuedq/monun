@@ -59,8 +59,8 @@ export const addMouseEvents = ({
   reaction(
     () => tools.selectedTool,
     () => {
-      // TODO: End drag without calling onDragEnd()
-      // (but don't reset dragging state when in temporary move tool)
+      // Reset dragging state on tool change (except for temporary move tool)
+      context.resetDragging();
       getCurrentTool().onHover?.(scene, context);
     },
   );
