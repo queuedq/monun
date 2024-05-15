@@ -33,22 +33,25 @@ export const addMouseEvents = ({
     context.startDragging(event);
     getCurrentTool().onDragStart?.(scene, context);
     getCurrentTool().onDragging?.(scene, context);
+    getCurrentTool().onHover?.(scene, context);
   });
 
   window.addEventListener("mousemove", (event: MouseEvent) => {
     event.preventDefault();
     context.updateCursor(getCursorPos(event));
 
-    getCurrentTool().onHover?.(scene, context);
     if (context.isDragging) getCurrentTool().onDragging?.(scene, context);
+    getCurrentTool().onHover?.(scene, context);
   });
 
   window.addEventListener("mouseup", (event: MouseEvent) => {
     event.preventDefault();
     context.updateCursor(getCursorPos(event));
 
-    getCurrentTool().onDragEnd?.(scene, context);
-    context.resetDragging();
+    if (context.isDragging && event.button === context.dragButton) {
+      getCurrentTool().onDragEnd?.(scene, context);
+      context.resetDragging();
+    }
     getCurrentTool().onHover?.(scene, context);
   });
 

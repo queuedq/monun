@@ -13,11 +13,8 @@ export default class TileRectTool implements ToolBehavior {
   }
 
   onHover(scene: Scene, context: DragContext) {
-    scene.selection.updateHover(context.cursorTile);
-  }
-
-  onDragging(scene: Scene, context: DragContext) {
-    scene.selection.updateRect(context.dragStartTile, context.cursorTile);
+    if (!context.isDragging) scene.selection.updateHover(context.cursorTile);
+    else scene.selection.updateRect(context.dragStartTile, context.cursorTile);
   }
 
   onDragEnd(scene: Scene, context: DragContext): void {
@@ -28,10 +25,7 @@ export default class TileRectTool implements ToolBehavior {
         this.tiles.getTile(this.tools.selectedTile),
       );
     } else if (context.dragButton == 2) {
-      scene.tileMap.eraseRect(
-        context.dragStartTile,
-        context.cursorTile,
-      );
+      scene.tileMap.eraseRect(context.dragStartTile, context.cursorTile);
     }
   }
 }
