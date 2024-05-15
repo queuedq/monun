@@ -59,12 +59,8 @@ export const addMouseEvents = ({
   reaction(
     () => tools.selectedTool,
     () => {
-      // TODO: Implement drag end event
-      // Apparently we need a low level API of MobX?
-      // https://github.com/mobxjs/mobx/issues/1785
-      // UPD: Maybe it is enough to reset dragging state? (line below)
-      // TODO: Don't reset dragging state when in temporary move tool
-      context.resetDragging();
+      // TODO: End drag without calling onDragEnd()
+      // (but don't reset dragging state when in temporary move tool)
       getCurrentTool().onHover?.(scene, context);
     },
   );
