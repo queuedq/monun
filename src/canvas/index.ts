@@ -7,6 +7,7 @@ import { ToolBehavior } from "./tools/types";
 import MoveTool from "./tools/move-tool";
 import TileTool from "./tools/tile-tool";
 import EraseTool from "./tools/erase-tool";
+import TileRectTool from "./tools/tile-rect-tool";
 
 export const init = ({
   canvasElement,
@@ -28,6 +29,7 @@ export const init = ({
   // Tool behaviors
   const moveTool = new MoveTool();
   const tileTool = new TileTool(tools, tiles);
+  const tileRectTool = new TileRectTool(tools, tiles);
   const eraseTool = new EraseTool();
 
   function getCurrentTool(): ToolBehavior {
@@ -36,6 +38,8 @@ export const init = ({
         return moveTool;
       case "TILE_DRAW":
         return tileTool;
+      case "TILE_RECT":
+        return tileRectTool;
       case "TILE_ERASE":
         return eraseTool;
     }

@@ -6,6 +6,7 @@ export const shortcuts: { [id in Action]?: string } = {
   MOVE: "Q",
   TILE_DRAW: "W",
   TILE_ERASE: "E",
+  TILE_RECT: "R",
 };
 
 export const getShortcut = (action: Action): string | undefined =>
