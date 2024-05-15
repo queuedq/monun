@@ -1,24 +1,13 @@
 import ToolStore from "../stores/tool-store";
-import { Action } from "./actions";
-
-// TODO: use proper shortcut type instead of string
-export const shortcuts: { [id in Action]?: string } = {
-  MOVE: "Q",
-  TILE_DRAW: "W",
-  TILE_ERASE: "E",
-  TILE_RECT: "R",
-};
-
-export const getShortcut = (action: Action): string | undefined =>
-  shortcuts[action];
+import { toolDefinitions } from "./toolbox/tools";
 
 export const registerShortcuts = (tools: ToolStore) => {
   window.addEventListener(
     "keydown",
     (event) => {
-      Object.entries(shortcuts).forEach(([k, v]) => {
-        if (event.code === "Key" + v) {
-          tools.select(k as Action);
+      toolDefinitions.forEach(({ type, shortcut }) => {
+        if (event.code === "Key" + shortcut) {
+          tools.select(type);
         }
       });
       if (event.code === "Space") {

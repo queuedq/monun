@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ToolStore from "../../stores/tool-store";
 import { toolDefinitions } from "./tools";
-import { getShortcut } from "../shortcuts";
 import { cn } from "../../lib/utils";
 
 interface ToolboxProps {
@@ -11,9 +10,10 @@ interface ToolboxProps {
 }
 
 const Toolbox = ({ tools }: ToolboxProps) => {
+  // TODO: add tooltip to show tool name text
   return (
     <div className="flex gap-2 relative p-2 bg-white border border-gray-300 rounded-md shadow-md shadow-gray-800/10">
-      {toolDefinitions.map(({ type, text, icon }) => (
+      {toolDefinitions.map(({ type, text, icon, shortcut }) => (
         <div className="relative">
           <button
             key={type}
@@ -24,7 +24,7 @@ const Toolbox = ({ tools }: ToolboxProps) => {
               "focus-visible:outline-none focus-visible:border-2 focus-visible:border-black",
               type === tools.currentTool
                 ? "bg-brand-100 border-brand-500 text-brand-700"
-                : "hover:bg-gray-100 hover:border-gray-300 active:bg-gray-200 active:border-gray-400"
+                : "hover:bg-gray-100 hover:border-gray-300 active:bg-gray-200 active:border-gray-400",
             )}
           >
             <FontAwesomeIcon icon={icon} />
@@ -33,10 +33,10 @@ const Toolbox = ({ tools }: ToolboxProps) => {
             className={cn(
               "flex items-center justify-center absolute -left-1 -top-1 w-3 h-3",
               "bg-white rounded-sm font-extrabold text-[10px] text-gray-500",
-              type === tools.currentTool && "text-brand-700"
+              type === tools.currentTool && "text-brand-700",
             )}
           >
-            {getShortcut(type)}
+            {shortcut}
           </div>
         </div>
       ))}
