@@ -7,6 +7,6 @@ export default class EraseTool implements ToolBehavior {
   }
 
   onDragging(scene: Scene, context: DragContext) {
-    scene.tileMap.erase(context.cursor);
+    scene.tileMap.erase(context.cursorTile);
   }
 }
