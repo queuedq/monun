@@ -30,10 +30,12 @@ export const addMouseEvents = ({
     event.preventDefault();
     context.updateCursor(getCursorPos(event));
 
-    context.startDragging(event);
-    getCurrentTool().onDragStart?.(scene, context);
-    getCurrentTool().onDragging?.(scene, context);
-    getCurrentTool().onHover?.(scene, context);
+    if (!context.isDragging) {
+      context.startDragging(event);
+      getCurrentTool().onDragStart?.(scene, context);
+      getCurrentTool().onDragging?.(scene, context);
+      getCurrentTool().onHover?.(scene, context);
+    }
   });
 
   window.addEventListener("mousemove", (event: MouseEvent) => {
