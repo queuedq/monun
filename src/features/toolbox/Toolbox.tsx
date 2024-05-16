@@ -14,9 +14,8 @@ const Toolbox = ({ tools }: ToolboxProps) => {
   return (
     <div className="flex gap-2 relative p-2 bg-white border border-gray-300 rounded-md shadow-md shadow-gray-800/10">
       {toolDefinitions.map(({ type, text, icon, shortcut }) => (
-        <div className="relative">
+        <div key={type} className="relative">
           <button
-            key={type}
             onClick={() => tools.select(type)}
             className={cn(
               "flex items-center justify-center w-8 h-8",
